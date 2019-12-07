@@ -10,6 +10,9 @@ public class RefreshRunningProcesses extends TimerTask {
     public void run() {
         timer.schedule(new RefreshRunningProcesses(), 1);
         ClockGenerator.incTime();
-        RunningProcesses.runProcess();
+    }
+    public void run2(RProcesses rProcesses) {
+        this.run();
+        rProcesses.runProcess();
     }
 }

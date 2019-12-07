@@ -8,8 +8,8 @@ public class ClearFinishedQueue extends TimerTask {
     @Override
     public void run() {
         timer.schedule(new ClearFinishedQueue(), 1000);
-        if(Queue.finishedQueue.size() > 10) {
-            Queue.finishedQueue.remove(0);
-        }
+//        if(FinishedQueue.getFinishedQueue().size() > 10) {
+//            FinishedQueue.getFinishedQueue().remove(0);
+//        }
     }
 }

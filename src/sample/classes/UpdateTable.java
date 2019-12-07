@@ -10,5 +10,6 @@ public class UpdateTable extends TimerTask {
     @Override
     public void run() {
         timer.schedule(new UpdateTable(), 1000);
+        //Controller.updateTable();
     }
 }

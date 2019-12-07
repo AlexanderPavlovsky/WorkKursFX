@@ -1,32 +1,28 @@
 package sample.classes;
 
 
+import java.util.ArrayList;
+
 public class ReadyQueue {
-    public static Queue queue;
+    private ArrayList<Process> readyQueue;
+
 
     public ReadyQueue() {
-        queue = new Queue();
-        AddQueue addQueue = new AddQueue();
-        addQueue.run();
+        readyQueue = new ArrayList<>();
     }
 
-    public Queue getQueue() {
-        return queue;
+    public ArrayList<Process> getReadyQueue() {
+        return readyQueue;
     }
 
-    static void addQueue() {
-        queue.add(5);
-        queue.addReadyQueue();
-//        if (queue.getReadyQueue().get(0) != null) {
-//            queue.removeReadyQueue(0);
-//            MemoryScheduler.releaseMemoryBlock(queue.getReadyQueue().get(0).getMemoryBlock());
-//        }
+    public void addReadyQueue(Process process) {
+        readyQueue.add(process);
     }
 
     @Override
     public String toString() {
-        return "Queue{" +
-                "queue = \n" + queue.toString() +
+        return "ReadyQueue{" +
+                "readyQueue=" + readyQueue +
                 '}';
     }
 }
