@@ -1,5 +1,6 @@
 package sample.classes;
 
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -24,18 +25,14 @@ public class Queue {
 
     public void creatReadyQueue() {
         queue.sort(Comparator.comparingInt(Process::getPriority));
-        for (Process process : queue) {
-            if (MemoryScheduler.add(process.getMemory(), process) && process.getState() != State.Finished) {
-                process.setState(State.Waiting);
-                readyQueue.addReadyQueue(process);
+        for (int i = 0; i < queue.size(); i++) {
+            if (MemoryScheduler.findFreeBlock(queue.get(0).getMemory(), queue.get(0))) {
+                queue.get(0).setState(State.Waiting);
+                readyQueue.addReadyQueue(queue.get(0));
             } else {
-                if (MemoryScheduler.findFreeBlock(process.getMemory(), process) && process.getState() != State.Finished) {
-                    process.setState(State.Waiting);
-                    readyQueue.addReadyQueue(process);
-                } else if (process.getState() != State.Finished) {
-                    rejectQueue.addRejectQueue(process);
-                }
+                rejectQueue.addRejectQueue(queue.get(0));
             }
+            queue.remove(0);
         }
     }
 
@@ -51,6 +48,14 @@ public class Queue {
 
     public FinishedQueue getFinishedQueue() {
         return finishedQueue;
+    }
+
+    public RejectQueue getRejectQueue() {
+        return rejectQueue;
+    }
+
+    public ArrayList<Process> getQueue() {
+        return queue;
     }
 
     @Override

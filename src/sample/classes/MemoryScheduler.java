@@ -15,22 +15,33 @@ public class MemoryScheduler {
 
     static boolean findFreeBlock(int size, Process process) {
         boolean check = false;
-        if (Configuration.memoryVolume - memoryBlocks.get(memoryBlocks.size() - 1).end + size <= 0) {
-            process.setMemoryBlock(new MemoryBlock(memoryBlocks.get(memoryBlocks.size() - 1).end + 1, memoryBlocks.get(memoryBlocks.size() - 1).end + size + 1));
+        if (memoryBlocks.isEmpty()) {
+            process.setMemoryBlock(new MemoryBlock(Configuration.OSMemoryVolume + 1, Configuration.OSMemoryVolume + size + 1));
             memoryBlocks.add(process.getMemoryBlock());
             check = true;
         } else {
-            memoryBlocks.sort(MemoryBlock.byEnd);
-            ArrayList<MemoryBlock> tempMemoryBlocks = new ArrayList<>();
-            for (int i = 0; i < memoryBlocks.size() - 1; i++) {
-                if (memoryBlocks.get(i + 1).start - memoryBlocks.get(i).end > size) {
-                    MemoryBlock tempMemoryBlock = new MemoryBlock(memoryBlocks.get(i).end, memoryBlocks.get(i + 1).start);
-                    tempMemoryBlocks.add(tempMemoryBlock);
+            if ((memoryBlocks.get(memoryBlocks.size() - 1).end + size) < Configuration.memoryVolume) {
+                check = add(size, process);
+                System.out.println(process.getMemoryBlock());
+            } else {
+                if (Configuration.memoryVolume - memoryBlocks.get(memoryBlocks.size() - 1).end + size <= 0) {
+                    process.setMemoryBlock(new MemoryBlock(memoryBlocks.get(memoryBlocks.size() - 1).end + 1, memoryBlocks.get(memoryBlocks.size() - 1).end + size + 1));
+                    memoryBlocks.add(process.getMemoryBlock());
+                    check = true;
+                } else {
+                    memoryBlocks.sort(MemoryBlock.byEnd);
+                    ArrayList<MemoryBlock> tempMemoryBlocks = new ArrayList<>();
+                    for (int i = 0; i < memoryBlocks.size() - 1; i++) {
+                        if (memoryBlocks.get(i + 1).start - memoryBlocks.get(i).end > size) {
+                            MemoryBlock tempMemoryBlock = new MemoryBlock(memoryBlocks.get(i).end, memoryBlocks.get(i + 1).start);
+                            tempMemoryBlocks.add(tempMemoryBlock);
+                        }
+                    }
+                    if (!tempMemoryBlocks.isEmpty()) {
+                        memoryBlocks.add(new MemoryBlock(tempMemoryBlocks.get(0).start, size));
+                        check = true;
+                    }
                 }
-            }
-            if (!tempMemoryBlocks.isEmpty()) {
-                memoryBlocks.add(new MemoryBlock(tempMemoryBlocks.get(0).start, size));
-                check = true;
             }
         }
         return check;
@@ -42,14 +53,8 @@ public class MemoryScheduler {
 
     public static boolean add(int size, Process process) {
         boolean check = false;
-        if (!memoryBlocks.isEmpty()) {
-            if (memoryBlocks.get(memoryBlocks.size() - 1).end + size <= Configuration.memoryVolume) {
-                process.setMemoryBlock(new MemoryBlock(memoryBlocks.get(memoryBlocks.size() - 1).end + 1, memoryBlocks.get(memoryBlocks.size() - 1).end + size + 1));
-                memoryBlocks.add(process.getMemoryBlock());
-                check = true;
-            }
-        } else {
-            process.setMemoryBlock(new MemoryBlock(Configuration.OSMemoryVolume + 1, Configuration.OSMemoryVolume + size + 1));
+        if (memoryBlocks.get(memoryBlocks.size() - 1).end + size < Configuration.memoryVolume) {
+            process.setMemoryBlock(new MemoryBlock(memoryBlocks.get(memoryBlocks.size() - 1).end + 1, memoryBlocks.get(memoryBlocks.size() - 1).end + size + 1));
             memoryBlocks.add(process.getMemoryBlock());
             check = true;
         }

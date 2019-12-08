@@ -1,41 +1,83 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ContextMenu?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.classes.Controller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.classes.Controller">
    <children>
       <TabPane layoutY="33.0" prefHeight="367.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Untitled Tab 1">
+          <Tab text="Ready Queue of Processes">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="processTable" prefHeight="339.0" prefWidth="600.0">
+                        <TableView fx:id="processTableReadyQueue" prefHeight="339.0" prefWidth="600.0">
                           <columns>
-                            <TableColumn fx:id="processId" prefWidth="75.0" text="id" />
-                            <TableColumn fx:id="processName" prefWidth="75.0" text="name" />
-                              <TableColumn fx:id="processPriority" prefWidth="75.0" text="priority" />
-                              <TableColumn fx:id="processTime" prefWidth="75.0" text="time" />
-                              <TableColumn fx:id="processMemory" prefWidth="75.0" text="memory" />
-                              <TableColumn fx:id="processTimeIn" prefWidth="75.0" text="timeIn" />
-                              <TableColumn fx:id="processBurstTime" prefWidth="75.0" text="burstTime" />
-                              <TableColumn fx:id="processState" prefWidth="75.0" text="state" />
+                            <TableColumn fx:id="processIdReadyQueue" prefWidth="75.0" text="id" />
+                            <TableColumn fx:id="processNameReadyQueue" prefWidth="75.0" text="name" />
+                              <TableColumn fx:id="processPriorityReadyQueue" prefWidth="75.0" text="priority" />
+                              <TableColumn fx:id="processTimeReadyQueue" prefWidth="75.0" text="time" />
+                              <TableColumn fx:id="processMemoryReadyQueue" prefWidth="75.0" text="memory" />
+                              <TableColumn fx:id="processTimeInReadyQueue" prefWidth="75.0" text="timeIn" />
+                              <TableColumn fx:id="processBurstTimeReadyQueue" prefWidth="75.0" text="burstTime" />
+                              <TableColumn fx:id="processStateReadyQueue" prefWidth="75.0" text="state" />
                           </columns>
+                           <contextMenu>
+                              <ContextMenu onAction="#contextMenu">
+                                <items>
+                                  <MenuItem mnemonicParsing="false" onAction="#highLevel" text="High" />
+                                </items>
+                              </ContextMenu>
+                           </contextMenu>
                         </TableView>
                      </children>
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Untitled Tab 2">
+          <Tab text="Reject queue of Processes">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="processTableRejectQueue" prefHeight="339.0" prefWidth="600.0">
+                           <columns>
+                              <TableColumn fx:id="processIdRejectQueue" prefWidth="75.0" text="id" />
+                              <TableColumn fx:id="processNameRejectQueue" prefWidth="75.0" text="name" />
+                              <TableColumn fx:id="processPriorityRejectQueue" prefWidth="75.0" text="priority" />
+                              <TableColumn fx:id="processTimeRejectQueue" prefWidth="75.0" text="time" />
+                              <TableColumn fx:id="processMemoryRejectQueue" prefWidth="75.0" text="memory" />
+                              <TableColumn fx:id="processTimeInRejectQueue" prefWidth="75.0" text="timeIn" />
+                              <TableColumn fx:id="processBurstTimeRejectQueue" prefWidth="75.0" text="burstTime" />
+                              <TableColumn fx:id="processStateRejectQueue" prefWidth="75.0" text="state" />
+                           </columns>
+                        </TableView>
+                     </children></AnchorPane>
             </content>
           </Tab>
+            <Tab text="Finished queue of Processes">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="processTableFinishedQueue" prefHeight="339.0" prefWidth="600.0">
+                           <columns>
+                              <TableColumn fx:id="processIdFinishedQueue" prefWidth="75.0" text="id" />
+                              <TableColumn fx:id="processNameFinishedQueue" prefWidth="75.0" text="name" />
+                              <TableColumn fx:id="processPriorityFinishedQueue" prefWidth="75.0" text="priority" />
+                              <TableColumn fx:id="processTimeFinishedQueue" prefWidth="75.0" text="time" />
+                              <TableColumn fx:id="processMemoryFinishedQueue" prefWidth="75.0" text="memory" />
+                              <TableColumn fx:id="processTimeInFinishedQueue" prefWidth="75.0" text="timeIn" />
+                              <TableColumn fx:id="processBurstTimeFinishedQueue" prefWidth="75.0" text="burstTime" />
+                              <TableColumn fx:id="processStateFinishedQueue" prefWidth="75.0" text="state" />
+                           </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
         </tabs>
       </TabPane>
    </children>

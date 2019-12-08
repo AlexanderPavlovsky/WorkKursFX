@@ -30,7 +30,7 @@ public class RunningProcesses {
     }
 
     public void addQueue() {
-        queue.add(5);
+        queue.add(20);
         queue.creatReadyQueue();
     }
 
