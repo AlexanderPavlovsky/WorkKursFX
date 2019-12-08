@@ -122,16 +122,26 @@ public class Controller {
 
     @FXML
     void highLevel(ActionEvent event) {
-        ArrayList<Process> processes = rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue();
-        int i = 0;
-        for(Process process: processes){
-            i++;
-            if(process.getName().equals(name)){
-                break;
-            }
-        }
-        rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue().get(i).setPriority(1);
-        System.out.println(rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue().get(i));
+       setPriority(1);
+    }
+    @FXML
+    void aboveAverageLevel(ActionEvent event) {
+     setPriority(6);
+    }
+
+    @FXML
+    void middleLevel(ActionEvent event) {
+     setPriority(12);
+    }
+
+    @FXML
+    void belowAverageLevel(ActionEvent event) {
+       setPriority(24);
+    }
+
+    @FXML
+    void lowLevel(ActionEvent event) {
+       setPriority(30);
     }
 
 
@@ -204,5 +214,17 @@ public class Controller {
                 dataFinishedQueue.add(new Table(process));
             }
         }
+    }
+
+    public void  setPriority(int priority){
+        ArrayList<Process> processes = rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue();
+        int i = 0;
+        for(Process process: processes){
+            i++;
+            if(process.getName().equals(name)){
+                break;
+            }
+        }
+        rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue().get(i).setPriority(priority);
     }
 }

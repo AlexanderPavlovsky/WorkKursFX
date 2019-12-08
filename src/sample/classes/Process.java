@@ -69,9 +69,9 @@ public class Process {
 
     Process(int id) {
         this.id = id;
-        this.memory = Utils.getRandomInteger(10, 100);
+        this.memory = Utils.getRandomInteger(10, Configuration.memoryVolume / 2);
         this.priority = Utils.getRandomInteger(1, Configuration.maxPriority);
-        this.time = Utils.getRandomInteger(1, 3000);
+        this.time = Utils.getRandomInteger(1, 2000);
         this.timeIn = 0;
         this.burstTime = 0;
         this.name = "P" + this.id;

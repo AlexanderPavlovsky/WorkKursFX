@@ -38,7 +38,7 @@ public class RunningProcess extends Thread {
             if (priority > process.getPriority()) {
                 process.setBurstTime(ClockGenerator.getTime());
                 process.setState(sample.classes.State.Finished);
-                MemoryScheduler.releaseMemoryBlock(process.getMemoryBlock());
+                runningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
                 runningProcesses.getFinishedQueue().addFinishedQueue(process);
             } else {
                 runningProcesses.getQueue().getReadyQueue().getReadyQueue().add(process);
@@ -46,7 +46,7 @@ public class RunningProcess extends Thread {
         } else {
             process.setBurstTime(ClockGenerator.getTime());
             process.setState(sample.classes.State.Finished);
-            MemoryScheduler.releaseMemoryBlock(process.getMemoryBlock());
+            runningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
             runningProcesses.getFinishedQueue().addFinishedQueue(process);
         }
         runningProcesses.getRunningProcessesIsFree().set(index, Boolean.TRUE);

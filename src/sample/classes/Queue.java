@@ -10,6 +10,8 @@ public class Queue {
     private ReadyQueue readyQueue;
     private FinishedQueue finishedQueue;
     private int lastID;
+    private MemoryScheduler memoryScheduler;
+    private boolean checkMemory;
 
     public Queue() {
         queue = new ArrayList<>();
@@ -17,6 +19,8 @@ public class Queue {
         readyQueue = new ReadyQueue();
         finishedQueue = new FinishedQueue();
         lastID = 1;
+        checkMemory = true;
+        memoryScheduler = new MemoryScheduler();
     }
 
     private void add() {
@@ -26,11 +30,17 @@ public class Queue {
     public void creatReadyQueue() {
         queue.sort(Comparator.comparingInt(Process::getPriority));
         for (int i = 0; i < queue.size(); i++) {
-            if (MemoryScheduler.findFreeBlock(queue.get(0).getMemory(), queue.get(0))) {
+            if (checkMemory) {
+                checkMemory = memoryScheduler.add(queue.get(0).getMemory(), queue.get(0));
                 queue.get(0).setState(State.Waiting);
                 readyQueue.addReadyQueue(queue.get(0));
             } else {
-                rejectQueue.addRejectQueue(queue.get(0));
+                if (memoryScheduler.findFreeBlock(queue.get(0).getMemory(), queue.get(0))) {
+                    queue.get(0).setState(State.Waiting);
+                    readyQueue.addReadyQueue(queue.get(0));
+                } else {
+                    rejectQueue.addRejectQueue(queue.get(0));
+                }
             }
             queue.remove(0);
         }
@@ -40,6 +50,10 @@ public class Queue {
         for (int i = 0; i < N; i++) {
             add();
         }
+    }
+
+    public MemoryScheduler getMemoryScheduler() {
+        return memoryScheduler;
     }
 
     public ReadyQueue getReadyQueue() {

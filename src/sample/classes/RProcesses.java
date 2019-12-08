@@ -37,6 +37,5 @@ public class RProcesses {
                 }
             }
         }
-        //System.out.println(runningProcesses.getQueue().getFinishedQueue().getFinishedQueue());
     }
 }

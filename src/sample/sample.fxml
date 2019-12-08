@@ -31,6 +31,10 @@
                               <ContextMenu onAction="#contextMenu">
                                 <items>
                                   <MenuItem mnemonicParsing="false" onAction="#highLevel" text="High" />
+                                    <MenuItem mnemonicParsing="false" onAction="#aboveAverageLevel" text="Above average" />
+                                    <MenuItem mnemonicParsing="false" onAction="#middleLevel" text="Middle" />
+                                    <MenuItem mnemonicParsing="false" onAction="#belowAverageLevel" text="Below average" />
+                                    <MenuItem mnemonicParsing="false" onAction="#lowLevel" text="Low" />
                                 </items>
                               </ContextMenu>
                            </contextMenu>
