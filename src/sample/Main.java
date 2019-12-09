@@ -5,22 +5,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.classes.Controller;
-import sample.classes.RProcesses;
-import sample.classes.RefreshRunningProcesses;
 
+/**
+ * Class Main
+ */
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+    public void start(final Stage primaryStage) throws Exception{
+        final Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Hello World");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
     }
 
+    /**
+     * Method main
+     * @param args argument
+     */
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         launch(args);
     }
 }

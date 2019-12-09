@@ -1,29 +1,60 @@
 package sample.classes;
 
+/**
+ * Class Process
+ */
 public class Process {
+    /**
+     * Id of process
+     */
     private int id;
+    /**
+     * Name of process
+     */
     private String name;
+    /**
+     * Priority of process
+     */
     private int priority;
+    /**
+     * Time of process
+     */
     private int time;
+    /**
+     * Memory of process
+     */
     private int memory;
+    /**
+     * Time in of process
+     */
     private int timeIn;
+    /**
+     * Burst time of process
+     */
     private int burstTime;
+    /**
+     * State of process
+     */
     private State state;
+    /**
+     * Memory block of process
+     */
     private MemoryBlock memoryBlock;
 
-    public void setPriority(int priority) {
+
+    public void setPriority(final int priority) {
         this.priority = priority;
     }
 
-    public void setBurstTime(int burstTime) {
+    public void setBurstTime(final int burstTime) {
         this.burstTime = burstTime;
     }
 
-    public void setTimeIn(int timeIn) {
+    public void setTimeIn(final int timeIn) {
         this.timeIn = timeIn;
     }
 
-    public void setState(State state) {
+    public void setState(final State state) {
         this.state = state;
     }
 
@@ -63,11 +94,11 @@ public class Process {
         return memoryBlock;
     }
 
-    public void setMemoryBlock(MemoryBlock memoryBlock) {
+    public void setMemoryBlock(final MemoryBlock memoryBlock) {
         this.memoryBlock = memoryBlock;
     }
 
-    Process(int id) {
+    Process(final int id) {
         this.id = id;
         this.memory = Utils.getRandomInteger(10, Configuration.memoryVolume / 2);
         this.priority = Utils.getRandomInteger(1, Configuration.maxPriority);

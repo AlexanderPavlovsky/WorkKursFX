@@ -2,19 +2,49 @@ package sample.classes;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import sample.classes.Process;
 
+/**
+ * Class Table
+ */
 public class Table {
+    /**
+     * Id of process
+     */
     private final SimpleIntegerProperty processId;
+    /**
+     * Name of process
+     */
     private final SimpleStringProperty processName;
+    /**
+     * Priority of process
+     */
     private final SimpleIntegerProperty processPriority;
+    /**
+     * Time of process
+     */
     private final SimpleIntegerProperty processTime;
+    /**
+     * Memory of process
+     */
     private final SimpleIntegerProperty processMemory;
+    /**
+     * Time in of process
+     */
     private final SimpleIntegerProperty processTimeIn;
+    /**
+     * Burst time of process
+     */
     private final SimpleIntegerProperty processBurstTime;
+    /**
+     * Sate of process
+     */
     private final SimpleStringProperty processState;
 
-    public Table(Process process) {
+    /**
+     * Constructor of Table
+     * @param process process
+     */
+    Table(final Process process) {
         this.processId = new SimpleIntegerProperty(process.getId());
         this.processName = new SimpleStringProperty(process.getName());
         this.processPriority = new SimpleIntegerProperty(process.getPriority());
@@ -25,15 +55,17 @@ public class Table {
         this.processState = new SimpleStringProperty(process.getState().toString());
     }
 
+
     public int getProcessId() {
         return processId.get();
     }
+
 
     public SimpleIntegerProperty processIdProperty() {
         return processId;
     }
 
-    public void setProcessId(int processId) {
+    public void setProcessId(final int processId) {
         this.processId.set(processId);
     }
 

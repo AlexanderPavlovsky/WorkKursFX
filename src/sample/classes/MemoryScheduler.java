@@ -2,21 +2,37 @@ package sample.classes;
 
 import java.util.ArrayList;
 
+/**
+ * Class MemoryScheduler
+ */
 public class MemoryScheduler {
+    /**
+     * Array list of memory block
+     */
     private ArrayList<MemoryBlock> memoryBlocks = new ArrayList<>();
 
+    /**
+     * memory blocks to string
+     * @return memory blocks
+     */
     public String print() {
-        String result = "[ ";
-        for (MemoryBlock memoryBlock : memoryBlocks) {
-            result += memoryBlock + " ";
+        StringBuilder result = new StringBuilder("[ ");
+        for (final MemoryBlock memoryBlock : memoryBlocks) {
+            result.append(memoryBlock).append(" ");
         }
         return result + " ]";
     }
 
-    public boolean findFreeBlock(int size, Process process) {
+    /**
+     * Find free block of memory
+     * @param size size memory
+     * @param process process
+     * @return check
+     */
+    public boolean findFreeBlock(final int size, final Process process) {
         boolean check = false;
         memoryBlocks.sort(MemoryBlock.byEnd);
-        ArrayList<MemoryBlock> tempMemoryBlocks = new ArrayList<>();
+        final ArrayList<MemoryBlock> tempMemoryBlocks = new ArrayList<>();
         if ((memoryBlocks.get(0).start - 1) - (Configuration.OSMemoryVolume + 1) >= size) {
             tempMemoryBlocks.add(new MemoryBlock(Configuration.OSMemoryVolume + 1, memoryBlocks.get(0).start - 1));
         }
@@ -27,7 +43,7 @@ public class MemoryScheduler {
             else {
                 for (int i = 0; i < memoryBlocks.size() - 1; i++) {
                     if (memoryBlocks.get(i + 1).start - memoryBlocks.get(i).end >= size) {
-                        MemoryBlock tempMemoryBlock = new MemoryBlock(memoryBlocks.get(i).end, memoryBlocks.get(i + 1).start);
+                        final MemoryBlock tempMemoryBlock = new MemoryBlock(memoryBlocks.get(i).end, memoryBlocks.get(i + 1).start);
                         tempMemoryBlocks.add(tempMemoryBlock);
                     }
                 }
@@ -41,15 +57,30 @@ public class MemoryScheduler {
         return check;
     }
 
-    public void releaseMemoryBlock(MemoryBlock memoryBlock) {
+    /**
+     * Remove memory block from memory blocks
+     * @param memoryBlock memory block
+     */
+
+    public void releaseMemoryBlock(final MemoryBlock memoryBlock) {
         memoryBlocks.remove(memoryBlock);
     }
 
+    /**
+     * Get memory blocks
+     * @return memory blocks
+     */
     public ArrayList<MemoryBlock> getMemoryBlocks() {
         return memoryBlocks;
     }
 
-    public boolean add(int size, Process process) {
+    /**
+     * Add to memory blocks of memory block
+     * @param size size of memory
+     * @param process process
+     * @return check
+     */
+    public boolean add(final int size, final Process process) {
         boolean check = false;
         if (!memoryBlocks.isEmpty()) {
             if (memoryBlocks.get(memoryBlocks.size() - 1).end + size < Configuration.memoryVolume) {

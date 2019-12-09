@@ -2,14 +2,31 @@ package sample.classes;
 
 import java.util.Random;
 
+/**
+ * Class Utils
+ */
 public class Utils {
-    public static Random random = new Random();
+    /**
+     * Variable random
+     */
+    private static Random random = new Random();
 
-    public static int getRandomInteger(int size) {
+    /**
+     * Get random number
+     * @param size size
+     * @return random number
+     */
+    public static int getRandomInteger(final int size) {
         return random.nextInt(size + 1);
     }
 
-    public static int getRandomInteger(int left, int right) {
+    /**
+     * Get random number
+     * @param left left limit
+     * @param right right limit
+     * @return random number
+     */
+    public static int getRandomInteger(final int left, final int right) {
         return left + random.nextInt(right - left + 1);
     }
 }

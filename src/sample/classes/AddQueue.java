@@ -1,20 +1,28 @@
 package sample.classes;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class AddQueue
+ */
 public class AddQueue extends TimerTask {
+    /**
+     * Variable timer
+     */
     private Timer timer = new Timer();
-    private RunningProcesses runningProcesses;
+    /**
+     * Object of RunningProcess
+     */
+    private CreatRunningProcesses creatRunningProcesses;
 
-    public AddQueue(RunningProcesses runningProcesses) {
-        this.runningProcesses = runningProcesses;
+    AddQueue(final CreatRunningProcesses creatRunningProcesses) {
+        this.creatRunningProcesses = creatRunningProcesses;
     }
 
     @Override
     public void run() {
-        timer.schedule(new AddQueue(runningProcesses), 1000);
-        runningProcesses.addQueue();
+        timer.schedule(new AddQueue(creatRunningProcesses), 1000);
+        creatRunningProcesses.addQueue();
     }
 }

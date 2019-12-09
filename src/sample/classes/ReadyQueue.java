@@ -3,19 +3,35 @@ package sample.classes;
 
 import java.util.ArrayList;
 
+/**
+ * Class ReadyQueue
+ */
 public class ReadyQueue {
+    /**
+     * Array list of Process
+     */
     private ArrayList<Process> readyQueue;
 
-
-    public ReadyQueue() {
+    /**
+     * Constructor of ready queue
+     */
+    ReadyQueue() {
         readyQueue = new ArrayList<>();
     }
 
+    /**
+     * Get ready queue
+     * @return ready queue
+     */
     public ArrayList<Process> getReadyQueue() {
         return readyQueue;
     }
 
-    public void addReadyQueue(Process process) {
+    /**
+     * Add to ready queue
+     * @param process process
+     */
+    public void addReadyQueue(final Process process) {
         readyQueue.add(process);
     }
 

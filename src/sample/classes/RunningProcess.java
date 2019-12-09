@@ -1,25 +1,49 @@
 package sample.classes;
 
-
-import java.util.ArrayList;
-import java.util.Comparator;
-
+/**
+ * Class RunningProcess
+ */
 public class RunningProcess extends Thread {
+    /**
+     * Object of Process
+     */
     private Process process;
+    /**
+     * index
+     */
     private int index;
-    private RunningProcesses runningProcesses;
+    /**
+     * Object of  CreatRunningProcesses
+     */
+    private CreatRunningProcesses creatRunningProcesses;
+    /**
+     * priority
+     */
     private int priority = 0;
 
-    RunningProcess(Process process, int index, RunningProcesses runningProcesses) {
+    /**
+     * Constructor of running process
+     * @param process process
+     * @param index index
+     * @param creatRunningProcesses creatRunningProcesses
+     */
+    RunningProcess(final Process process, final int index, final CreatRunningProcesses creatRunningProcesses) {
         this.process = process;
         this.index = index;
-        this.runningProcesses = runningProcesses;
+        this.creatRunningProcesses = creatRunningProcesses;
     }
 
-    RunningProcess(Process process, int index, RunningProcesses runningProcesses, int priority) {
+    /**
+     * Constructor of running process
+     * @param process process
+     * @param index index
+     * @param creatRunningProcesses creatRunningProcesses
+     * @param priority priority
+     */
+    RunningProcess(final Process process, final int index, final CreatRunningProcesses creatRunningProcesses, final int priority) {
         this.process = process;
         this.index = index;
-        this.runningProcesses = runningProcesses;
+        this.creatRunningProcesses = creatRunningProcesses;
         this.priority = priority;
     }
 
@@ -38,17 +62,17 @@ public class RunningProcess extends Thread {
             if (priority > process.getPriority()) {
                 process.setBurstTime(ClockGenerator.getTime());
                 process.setState(sample.classes.State.Finished);
-                runningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
-                runningProcesses.getFinishedQueue().addFinishedQueue(process);
+                creatRunningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
+                creatRunningProcesses.getFinishedQueue().addFinishedQueue(process);
             } else {
-                runningProcesses.getQueue().getReadyQueue().getReadyQueue().add(process);
+                creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().add(process);
             }
         } else {
             process.setBurstTime(ClockGenerator.getTime());
             process.setState(sample.classes.State.Finished);
-            runningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
-            runningProcesses.getFinishedQueue().addFinishedQueue(process);
+            creatRunningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
+            creatRunningProcesses.getFinishedQueue().addFinishedQueue(process);
         }
-        runningProcesses.getRunningProcessesIsFree().set(index, Boolean.TRUE);
+        creatRunningProcesses.getRunningProcessesIsFree().set(index, Boolean.TRUE);
     }
 }

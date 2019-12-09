@@ -1,162 +1,260 @@
 package sample.classes;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Side;
-import javafx.scene.Group;
 import javafx.scene.control.*;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.ContextMenuEvent;
-import javafx.stage.WindowEvent;
-import javafx.util.Callback;
 
+/**
+ * Class Controller
+ */
 public class Controller {
-
     @FXML
     private ResourceBundle resources;
 
     @FXML
     private URL location;
 
-
+    /**
+     * Table view of ready queue
+     */
     @FXML
     private TableView<Table> processTableReadyQueue;
-
+    /**
+     * Table column of process id
+     */
     @FXML
     private TableColumn<Table, Integer> processIdReadyQueue;
+    /**
+     * Table column of process of name
+     */
 
     @FXML
     private TableColumn<Table, String> processNameReadyQueue;
-
+    /**
+     * Table column of process priority
+     */
     @FXML
     private TableColumn<Table, Integer> processPriorityReadyQueue;
-
+    /**
+     * Table column of process time
+     */
     @FXML
     private TableColumn<Table, Integer> processTimeReadyQueue;
+    /**
+     * Table column of process memory
+     */
 
     @FXML
     private TableColumn<Table, Integer> processMemoryReadyQueue;
+    /**
+     * Table column of process time in
+     */
 
     @FXML
     private TableColumn<Table, Integer> processTimeInReadyQueue;
+    /**
+     * Table column of process burst time
+     */
 
     @FXML
     private TableColumn<Table, Integer> processBurstTimeReadyQueue;
+    /**
+     * Table column of process state
+     */
 
     @FXML
     private TableColumn<Table, String> processStateReadyQueue;
-
+    /**
+     * Table view of reject queue
+     */
     @FXML
     private TableView<Table> processTableRejectQueue;
-
+    /**
+     * Table column of process id
+     */
     @FXML
     private TableColumn<Table, Integer> processIdRejectQueue;
-
+    /**
+     * Table column of process of name
+     */
     @FXML
     private TableColumn<Table, String> processNameRejectQueue;
-
+    /**
+     * Table column of process priority
+     */
     @FXML
     private TableColumn<Table, Integer> processPriorityRejectQueue;
-
+    /**
+     * Table column of process time
+     */
     @FXML
     private TableColumn<Table, Integer> processTimeRejectQueue;
-
+    /**
+     * Table column of process memory
+     */
     @FXML
     private TableColumn<Table, Integer> processMemoryRejectQueue;
-
+    /**
+     * Table column of process time in
+     */
     @FXML
     private TableColumn<Table, Integer> processTimeInRejectQueue;
-
+    /**
+     * Table column of process burst time
+     */
     @FXML
     private TableColumn<Table, Integer> processBurstTimeRejectQueue;
-
+    /**
+     * Table column of process state
+     */
     @FXML
     private TableColumn<Table, String> processStateRejectQueue;
-
-
+    /**
+     * Table view of finished queue
+     */
     @FXML
     private TableView<Table> processTableFinishedQueue;
-
+    /**
+     * Table column of process id
+     */
     @FXML
     private TableColumn<Table, Integer> processIdFinishedQueue;
-
+    /**
+     * Table column of process of name
+     */
     @FXML
     private TableColumn<Table, String> processNameFinishedQueue;
-
+    /**
+     * Table column of process priority
+     */
     @FXML
     private TableColumn<Table, Integer> processPriorityFinishedQueue;
-
+    /**
+     * Table column of process time
+     */
     @FXML
     private TableColumn<Table, Integer> processTimeFinishedQueue;
-
+    /**
+     * Table column of process memory
+     */
     @FXML
     private TableColumn<Table, Integer> processMemoryFinishedQueue;
-
+    /**
+     * Table column of process time in
+     */
     @FXML
     private TableColumn<Table, Integer> processTimeInFinishedQueue;
-
+    /**
+     * Table column of process burst time
+     */
     @FXML
     private TableColumn<Table, Integer> processBurstTimeFinishedQueue;
-
+    /**
+     * Table column of process state
+     */
     @FXML
     private TableColumn<Table, String> processStateFinishedQueue;
-
+    /**
+     * name of process
+     */
     private String name;
+
+    /**
+     * Method context menu
+     * @param event event
+     */
     @FXML
-    void contextMenu(ActionEvent event) {
-        name  = processTableReadyQueue.getSelectionModel().getSelectedItem().getProcessName();
+    public void contextMenu(final ActionEvent event) {
+        name = processTableReadyQueue.getSelectionModel().getSelectedItem().getProcessName();
         System.out.println(name);
     }
 
+    /**
+     * Set high priority of the process
+     * @param event event
+     */
     @FXML
-    void highLevel(ActionEvent event) {
-       setPriority(1);
-    }
-    @FXML
-    void aboveAverageLevel(ActionEvent event) {
-     setPriority(6);
-    }
-
-    @FXML
-    void middleLevel(ActionEvent event) {
-     setPriority(12);
+    public void highLevel(final ActionEvent event) {
+        setPriority(1);
     }
 
+    /**
+     * Set above average priority of the process
+     * @param event event
+     */
     @FXML
-    void belowAverageLevel(ActionEvent event) {
-       setPriority(24);
+    public void aboveAverageLevel(final ActionEvent event) {
+        setPriority(6);
     }
 
+    /**
+     * Set middle priority of the process
+     * @param event event
+     */
     @FXML
-    void lowLevel(ActionEvent event) {
-       setPriority(30);
+    public void middleLevel(final ActionEvent event) {
+        setPriority(12);
     }
 
+    /**
+     * Set below average priority of the process
+     * @param event event
+     */
+    @FXML
+    public void belowAverageLevel(final ActionEvent event) {
+        setPriority(24);
+    }
 
-    private static RProcesses rProcesses = new RProcesses();
-    private RefreshRunningProcesses refreshRunningProcesses = new RefreshRunningProcesses(rProcesses);
+    /**
+     * Set low priority of the process
+     * @param event event
+     */
+    @FXML
+    public void lowLevel(final ActionEvent event) {
+        setPriority(30);
+    }
+
+    /**
+     * Object of RunningProcesses
+     */
+    private static RunningProcesses runningProcesses = new RunningProcesses();
+    /**
+     * Object of RefreshRunningProcesses
+     */
+    private RefreshRunningProcesses refreshRunningProcesses = new RefreshRunningProcesses(runningProcesses);
+    /**
+     * Object of UpdateTable
+     */
     private UpdateTable updateTable = new UpdateTable();
-    private ClearQueues clearQueues = new ClearQueues(rProcesses.getRunningProcesses().getQueue().getFinishedQueue(), rProcesses.getRunningProcesses().getQueue().getRejectQueue());
-
+    /**
+     * Object of ClearQueues
+     */
+    private ClearQueues clearQueues = new ClearQueues(runningProcesses.getCreatRunningProcesses().getQueue().getFinishedQueue(), runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue());
+    /**
+     * Object of ObservableList
+     */
     private static ObservableList<Table> dataReadyQueue = FXCollections.observableArrayList();
+    /**
+     * Object of ObservableList
+     */
     private static ObservableList<Table> dataRejectQueue = FXCollections.observableArrayList();
+    /**
+     * Object of ObservableList
+     */
     private static ObservableList<Table> dataFinishedQueue = FXCollections.observableArrayList();
 
-
+    /**
+     * Initialize of Controller
+     */
     @FXML
-    void initialize() {
+    public void initialize() {
         processIdReadyQueue.setCellValueFactory(new PropertyValueFactory<Table, Integer>("processId"));
         processNameReadyQueue.setCellValueFactory(new PropertyValueFactory<Table, String>("processName"));
         processPriorityReadyQueue.setCellValueFactory(new PropertyValueFactory<Table, Integer>("processPriority"));
@@ -189,42 +287,55 @@ public class Controller {
         clearQueues.run();
     }
 
+    /**
+     * Update table of ready queue
+     */
     public static void updateTableReadyQueue() {
         dataReadyQueue.clear();
-        if (!rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue().isEmpty()) {
-            for (Process process : rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue()) {
+        if (!runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue().isEmpty()) {
+            for (final Process process : runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue()) {
                 dataReadyQueue.add(new Table(process));
             }
         }
     }
 
+    /**
+     * Update table of reject queue
+     */
     public static void updateTableRejectQueue() {
         dataRejectQueue.clear();
-        if (!rProcesses.getRunningProcesses().getQueue().getRejectQueue().getRejectQueue().isEmpty()) {
-            for (Process process : rProcesses.getRunningProcesses().getQueue().getRejectQueue().getRejectQueue()) {
+        if (!runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue().getRejectQueue().isEmpty()) {
+            for (final Process process : runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue().getRejectQueue()) {
                 dataRejectQueue.add(new Table(process));
             }
         }
     }
 
+    /**
+     * Update table of finished queue
+     */
     public static void updateTableFinishedQueue() {
         dataFinishedQueue.clear();
-        if (!rProcesses.getRunningProcesses().getQueue().getFinishedQueue().getFinishedQueue().isEmpty()) {
-            for (Process process : rProcesses.getRunningProcesses().getFinishedQueue().getFinishedQueue()) {
+        if (!runningProcesses.getCreatRunningProcesses().getQueue().getFinishedQueue().getFinishedQueue().isEmpty()) {
+            for (final Process process : runningProcesses.getCreatRunningProcesses().getFinishedQueue().getFinishedQueue()) {
                 dataFinishedQueue.add(new Table(process));
             }
         }
     }
 
-    public void  setPriority(int priority){
-        ArrayList<Process> processes = rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue();
+    /**
+     * Set priority of the process
+     * @param priority priority
+     */
+    private void setPriority(final int priority) {
+        final ArrayList<Process> processes = runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue();
         int i = 0;
-        for(Process process: processes){
+        for (final Process process : processes) {
             i++;
-            if(process.getName().equals(name)){
+            if (process.getName().equals(name)) {
                 break;
             }
         }
-        rProcesses.getRunningProcesses().getQueue().getReadyQueue().getReadyQueue().get(i).setPriority(priority);
+        runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue().get(i).setPriority(priority);
     }
 }

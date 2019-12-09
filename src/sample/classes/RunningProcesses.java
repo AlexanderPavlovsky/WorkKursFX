@@ -3,42 +3,51 @@ package sample.classes;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class RunningProcesses {
-    private ArrayList<RunningProcess> runningProcesses;
-    private ArrayList<Boolean> runningProcessesIsFree;
-    private Queue queue;
+/**
+ * Class RunningProcesses
+ */
+class RunningProcesses {
+    /**
+     * Object of CreatRunningProcesses
+     */
+    private CreatRunningProcesses creatRunningProcesses;
 
 
-    public RunningProcesses( ) {
-        runningProcesses = new ArrayList<>();
-        queue = new Queue();
+    RunningProcesses() {
+        creatRunningProcesses = new CreatRunningProcesses();
+        final AddQueue addQueue = new AddQueue(creatRunningProcesses);
+        addQueue.run();
+    }
+
+    /**
+     * Get creat running processes
+     * @return creat running processes
+     */
+    public CreatRunningProcesses getCreatRunningProcesses() {
+        return creatRunningProcesses;
+    }
+
+    /**
+     * Run of processes
+     */
+    public void runProcess() {
+        Process runningProcess;
         for (int i = 0; i < Configuration.quantityRunningProcesses; i++) {
-            runningProcesses.add(null);
+            if (creatRunningProcesses.getRunningProcessesIsFree().get(i) == Boolean.TRUE) {
+                if (!creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().isEmpty()) {
+                    creatRunningProcesses.getRunningProcessesIsFree().set(i, Boolean.FALSE);
+                    runningProcess = creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().get(0);
+                    creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().remove(0);
+                    final ArrayList<Process> tempProcesses = creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue();
+                    tempProcesses.sort(Comparator.comparingInt(Process::getPriority));
+                    if(!tempProcesses.isEmpty()){
+                        creatRunningProcesses.getCreatRunningProcesses().set(i, new RunningProcess(runningProcess, i, creatRunningProcesses, tempProcesses.get(0).getPriority()));
+                    }else {
+                        creatRunningProcesses.getCreatRunningProcesses().set(i, new RunningProcess(runningProcess, i, creatRunningProcesses));
+                    }
+                    creatRunningProcesses.getCreatRunningProcesses().get(i).start();
+                }
+            }
         }
-        runningProcessesIsFree = new ArrayList<>();
-        for (int i = 0; i < Configuration.quantityRunningProcesses; i++) {
-            runningProcessesIsFree.add(Boolean.TRUE);
-        }
-    }
-
-    public ArrayList<Boolean> getRunningProcessesIsFree() {
-        return runningProcessesIsFree;
-    }
-
-    public Queue getQueue() {
-        return queue;
-    }
-
-    public void addQueue() {
-        queue.add(20);
-        queue.creatReadyQueue();
-    }
-
-    public ArrayList<RunningProcess> getRunningProcesses() {
-        return runningProcesses;
-    }
-
-    public FinishedQueue getFinishedQueue() {
-        return queue.getFinishedQueue();
     }
 }

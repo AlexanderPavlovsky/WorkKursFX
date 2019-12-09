@@ -2,17 +2,34 @@ package sample.classes;
 
 import java.util.ArrayList;
 
-public class RejectQueue {
+/**
+ * Class RejectQueue
+ */
+class RejectQueue {
+    /**
+     * Array list of Process
+     */
     private ArrayList<Process> rejectQueue;
 
-    public RejectQueue() {
+    /**
+     * Constructor of reject queue
+     */
+    RejectQueue() {
         rejectQueue = new ArrayList<>();
     }
 
-    public void addRejectQueue(Process process) {
+    /**
+     * Add to reject queue
+     * @param process process
+     */
+    public void addRejectQueue(final Process process) {
         rejectQueue.add(process);
     }
 
+    /**
+     * Get reject queue
+     * @return reject queue
+     */
     public ArrayList<Process> getRejectQueue() {
         return rejectQueue;
     }

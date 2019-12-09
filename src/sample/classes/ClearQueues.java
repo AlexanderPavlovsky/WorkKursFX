@@ -1,15 +1,26 @@
 package sample.classes;
 
-import java.sql.ResultSet;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class ClearQueues
+ */
 public class ClearQueues extends TimerTask {
+    /**
+     * Variable timer
+     */
     private Timer timer = new Timer();
+    /**
+     * Object of FinishedQueue
+     */
     private FinishedQueue finishedQueue;
+    /**
+     * Object of RejectQueue
+     */
     private RejectQueue rejectQueue;
 
-    public ClearQueues(FinishedQueue finishedQueue, RejectQueue rejectQueue) {
+    ClearQueues(final FinishedQueue finishedQueue, final RejectQueue rejectQueue) {
         this.finishedQueue = finishedQueue;
         this.rejectQueue = rejectQueue;
     }
@@ -20,16 +31,12 @@ public class ClearQueues extends TimerTask {
         if (finishedQueue.getFinishedQueue().size() > 10) {
             finishedQueue.getFinishedQueue().remove(0);
         } else if (finishedQueue.getFinishedQueue().size() > 50) {
-            for (int i = 0; i < 20; i++) {
-                finishedQueue.getFinishedQueue().remove(0);
-            }
+            finishedQueue.getFinishedQueue().subList(0, 20).clear();
         }
         if (rejectQueue.getRejectQueue().size() > 10) {
             rejectQueue.getRejectQueue().remove(0);
         } else if (rejectQueue.getRejectQueue().size() > 50) {
-            for (int i = 0; i < 20; i++) {
-                rejectQueue.getRejectQueue().remove(0);
-            }
+            rejectQueue.getRejectQueue().subList(0, 20).clear();
         }
     }
 }

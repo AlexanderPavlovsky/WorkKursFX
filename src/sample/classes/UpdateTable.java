@@ -4,7 +4,13 @@ package sample.classes;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * Class UpdateTable
+ */
 public class UpdateTable extends TimerTask {
+    /**
+     * Variable timer
+     */
     private Timer timer = new Timer();
 
     @Override
