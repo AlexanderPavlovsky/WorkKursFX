@@ -60,7 +60,13 @@ class RunningProcesses {
                     creatRunningProcesses.getCreatRunningProcesses().get(i).start();
                 }
                 else {
-                    if(creatRunningProcesses.getRunningProcessesIsFree().get(i) == Boolean.TRUE){
+                    int checkFreeRunProcess = 0;
+                    for (int j = 0; j < Configuration.quantityRunningProcesses; j++) {
+                        if(creatRunningProcesses.getRunningProcessesIsFree().get(i) == Boolean.TRUE){
+                            checkFreeRunProcess++;
+                        }
+                    }
+                    if(checkFreeRunProcess == Configuration.quantityRunningProcesses){
                         processorIdleCycles++;
                     }
                 }

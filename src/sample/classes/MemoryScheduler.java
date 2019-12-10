@@ -31,7 +31,11 @@ public class MemoryScheduler {
      */
     public boolean findFreeBlock(final int size, final Process process) {
         boolean check = false;
-        memoryBlocks.sort(MemoryBlock.byEnd);
+        try{
+            memoryBlocks.sort(MemoryBlock.byEnd);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
         final ArrayList<MemoryBlock> tempMemoryBlocks = new ArrayList<>();
         if(memoryBlocks.isEmpty()){
             process.setMemoryBlock(new MemoryBlock(Configuration.OSMemoryVolume + 1, Configuration.OSMemoryVolume + size + 1));

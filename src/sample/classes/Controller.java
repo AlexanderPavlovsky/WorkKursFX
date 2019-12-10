@@ -251,7 +251,7 @@ public class Controller {
             runningProcesses.getCreatRunningProcesses().setSpeed(1);
         } else {
             turboBoostId.setStyle("-fx-background-color: red");
-            runningProcesses.getCreatRunningProcesses().setSpeed(10);
+            runningProcesses.getCreatRunningProcesses().setSpeed(100);
         }
 
     }
