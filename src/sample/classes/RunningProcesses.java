@@ -59,17 +59,17 @@ class RunningProcesses {
                     }
                     creatRunningProcesses.getCreatRunningProcesses().get(i).start();
                 }
-                else {
-                    int checkFreeRunProcess = 0;
-                    for (int j = 0; j < Configuration.quantityRunningProcesses; j++) {
-                        if(creatRunningProcesses.getRunningProcessesIsFree().get(i) == Boolean.TRUE){
-                            checkFreeRunProcess++;
-                        }
-                    }
-                    if(checkFreeRunProcess == Configuration.quantityRunningProcesses){
-                        processorIdleCycles++;
-                    }
+            }
+        }
+        if (creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().isEmpty()){
+            int checkFreeRunProcess = 0;
+            for (int i = 0; i < Configuration.quantityRunningProcesses; i++) {
+                if(creatRunningProcesses.getRunningProcessesIsFree().get(i) == Boolean.TRUE){
+                    checkFreeRunProcess++;
                 }
+            }
+            if(checkFreeRunProcess == Configuration.quantityRunningProcesses){
+                processorIdleCycles++;
             }
         }
     }
