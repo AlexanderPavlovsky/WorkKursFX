@@ -33,26 +33,31 @@ public class MemoryScheduler {
         boolean check = false;
         memoryBlocks.sort(MemoryBlock.byEnd);
         final ArrayList<MemoryBlock> tempMemoryBlocks = new ArrayList<>();
-        if ((memoryBlocks.get(0).start - 1) - (Configuration.OSMemoryVolume + 1) >= size) {
-            tempMemoryBlocks.add(new MemoryBlock(Configuration.OSMemoryVolume + 1, memoryBlocks.get(0).start - 1));
+        if(memoryBlocks.isEmpty()){
+            process.setMemoryBlock(new MemoryBlock(Configuration.OSMemoryVolume + 1, Configuration.OSMemoryVolume + size + 1));
+            memoryBlocks.add(process.getMemoryBlock());
+            check = true;
         }
         else {
-            if (Configuration.memoryVolume - (memoryBlocks.get(memoryBlocks.size() - 1).end + 1) >= size) {
-                tempMemoryBlocks.add(new MemoryBlock(memoryBlocks.get(memoryBlocks.size() - 1).end + 1, Configuration.memoryVolume));
-            }
-            else {
-                for (int i = 0; i < memoryBlocks.size() - 1; i++) {
-                    if (memoryBlocks.get(i + 1).start - memoryBlocks.get(i).end >= size) {
-                        final MemoryBlock tempMemoryBlock = new MemoryBlock(memoryBlocks.get(i).end, memoryBlocks.get(i + 1).start);
-                        tempMemoryBlocks.add(tempMemoryBlock);
+            if ((memoryBlocks.get(0).start - 1) - (Configuration.OSMemoryVolume + 1) >= size) {
+                tempMemoryBlocks.add(new MemoryBlock(Configuration.OSMemoryVolume + 1, memoryBlocks.get(0).start - 1));
+            } else {
+                if (Configuration.memoryVolume - (memoryBlocks.get(memoryBlocks.size() - 1).end + 1) >= size) {
+                    tempMemoryBlocks.add(new MemoryBlock(memoryBlocks.get(memoryBlocks.size() - 1).end + 1, Configuration.memoryVolume));
+                } else {
+                    for (int i = 0; i < memoryBlocks.size() - 1; i++) {
+                        if (memoryBlocks.get(i + 1).start - memoryBlocks.get(i).end >= size) {
+                            final MemoryBlock tempMemoryBlock = new MemoryBlock(memoryBlocks.get(i).end, memoryBlocks.get(i + 1).start);
+                            tempMemoryBlocks.add(tempMemoryBlock);
+                        }
                     }
                 }
             }
-        }
-        if (!tempMemoryBlocks.isEmpty()) {
-            process.setMemoryBlock(new MemoryBlock(tempMemoryBlocks.get(0).start + 1, tempMemoryBlocks.get(0).start + size));
-            memoryBlocks.add(process.getMemoryBlock());
-            check = true;
+            if (!tempMemoryBlocks.isEmpty()) {
+                process.setMemoryBlock(new MemoryBlock(tempMemoryBlocks.get(0).start + 1, tempMemoryBlocks.get(0).start + size));
+                memoryBlocks.add(process.getMemoryBlock());
+                check = true;
+            }
         }
         return check;
     }

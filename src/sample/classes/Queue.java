@@ -35,6 +35,10 @@ public class Queue {
      * check memory
      */
     private boolean checkMemory;
+    /**
+     * Average service wait
+     */
+    private int averageServiceWait = 0;
 
     /**
      * Constructor of Queue
@@ -56,19 +60,26 @@ public class Queue {
         queue.add(new Process(lastID++));
     }
 
+    public int getAverageServiceWait() {
+        return averageServiceWait;
+    }
+
     /**
      * Creat ready queue
      */
     public void creatReadyQueue() {
         queue.sort(Comparator.comparingInt(Process::getPriority));
         for (int i = 0; i < queue.size(); i++) {
+            averageServiceWait += ClockGenerator.getTime() - queue.get(0).getTimeIn();
             if (checkMemory) {
                 checkMemory = memoryScheduler.add(queue.get(0).getMemory(), queue.get(0));
                 queue.get(0).setState(State.Waiting);
+                queue.get(0).setTimeInReadyQueue(ClockGenerator.getTime());
                 readyQueue.addReadyQueue(queue.get(0));
             } else {
                 if (memoryScheduler.findFreeBlock(queue.get(0).getMemory(), queue.get(0))) {
                     queue.get(0).setState(State.Waiting);
+                    queue.get(0).setTimeInReadyQueue(ClockGenerator.getTime());
                     readyQueue.addReadyQueue(queue.get(0));
                 } else {
                     rejectQueue.addRejectQueue(queue.get(0));
@@ -80,6 +91,7 @@ public class Queue {
 
     /**
      * Add n processes
+     *
      * @param N quantity of processes
      */
     public void add(final int N) {
@@ -88,8 +100,13 @@ public class Queue {
         }
     }
 
+    public int getLastID() {
+        return lastID;
+    }
+
     /**
      * Get memory scheduler
+     *
      * @return memory scheduler
      */
     public MemoryScheduler getMemoryScheduler() {
@@ -98,6 +115,7 @@ public class Queue {
 
     /**
      * Get ready queue
+     *
      * @return ready queue
      */
     public ReadyQueue getReadyQueue() {
@@ -106,6 +124,7 @@ public class Queue {
 
     /**
      * Get finished queue
+     *
      * @return finished queue
      */
     public FinishedQueue getFinishedQueue() {
@@ -114,6 +133,7 @@ public class Queue {
 
     /**
      * Get reject queue
+     *
      * @return reject queue
      */
     public RejectQueue getRejectQueue() {
@@ -122,6 +142,7 @@ public class Queue {
 
     /**
      * Get queue
+     *
      * @return queue
      */
     public ArrayList<Process> getQueue() {

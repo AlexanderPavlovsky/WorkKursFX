@@ -77,7 +77,7 @@ public class Table {
         return processName;
     }
 
-    public void setProcessName(String processName) {
+    public void setProcessName(final String processName) {
         this.processName.set(processName);
     }
 
@@ -89,7 +89,7 @@ public class Table {
         return processPriority;
     }
 
-    public void setProcessPriority(int processPriority) {
+    public void setProcessPriority(final int processPriority) {
         this.processPriority.set(processPriority);
     }
 
@@ -101,7 +101,7 @@ public class Table {
         return processTime;
     }
 
-    public void setProcessTime(int processTime) {
+    public void setProcessTime(final int processTime) {
         this.processTime.set(processTime);
     }
 
@@ -113,7 +113,7 @@ public class Table {
         return processMemory;
     }
 
-    public void setProcessMemory(int processMemory) {
+    public void setProcessMemory(final int processMemory) {
         this.processMemory.set(processMemory);
     }
 
@@ -125,7 +125,7 @@ public class Table {
         return processTimeIn;
     }
 
-    public void setProcessTimeIn(int processTimeIn) {
+    public void setProcessTimeIn(final int processTimeIn) {
         this.processTimeIn.set(processTimeIn);
     }
 
@@ -137,7 +137,7 @@ public class Table {
         return processBurstTime;
     }
 
-    public void setProcessBurstTime(int processBurstTime) {
+    public void setProcessBurstTime(final int processBurstTime) {
         this.processBurstTime.set(processBurstTime);
     }
 
@@ -149,7 +149,7 @@ public class Table {
         return processState;
     }
 
-    public void setProcessState(String processState) {
+    public void setProcessState(final String processState) {
         this.processState.set(processState);
     }
 }

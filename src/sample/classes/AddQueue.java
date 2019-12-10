@@ -22,7 +22,7 @@ public class AddQueue extends TimerTask {
 
     @Override
     public void run() {
-        timer.schedule(new AddQueue(creatRunningProcesses), 1000);
+        timer.schedule(new AddQueue(creatRunningProcesses), 1500);
         creatRunningProcesses.addQueue();
     }
 }

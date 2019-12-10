@@ -10,12 +10,17 @@ class RejectQueue {
      * Array list of Process
      */
     private ArrayList<Process> rejectQueue;
+    /**
+     * Quantity reject queue
+     */
+    private int  quantityRejectQueue;
 
     /**
      * Constructor of reject queue
      */
     RejectQueue() {
         rejectQueue = new ArrayList<>();
+        quantityRejectQueue = 1;
     }
 
     /**
@@ -24,6 +29,11 @@ class RejectQueue {
      */
     public void addRejectQueue(final Process process) {
         rejectQueue.add(process);
+        quantityRejectQueue++;
+    }
+
+    public int getQuantityRejectQueue() {
+        return quantityRejectQueue;
     }
 
     /**

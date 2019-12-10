@@ -11,12 +11,21 @@ public class ReadyQueue {
      * Array list of Process
      */
     private ArrayList<Process> readyQueue;
+    /**
+     * Quantity ready queue
+     */
+    private int quantityReadyQueue;
+
+    public int getQuantityReadyQueue() {
+        return quantityReadyQueue;
+    }
 
     /**
      * Constructor of ready queue
      */
     ReadyQueue() {
         readyQueue = new ArrayList<>();
+        quantityReadyQueue = 0;
     }
 
     /**
@@ -33,6 +42,7 @@ public class ReadyQueue {
      */
     public void addReadyQueue(final Process process) {
         readyQueue.add(process);
+        quantityReadyQueue++;
     }
 
     @Override

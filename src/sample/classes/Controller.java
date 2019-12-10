@@ -3,6 +3,8 @@ package sample.classes;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -168,16 +170,23 @@ public class Controller {
 
     /**
      * Method context menu
+     *
      * @param event event
      */
     @FXML
     public void contextMenu(final ActionEvent event) {
-        name = processTableReadyQueue.getSelectionModel().getSelectedItem().getProcessName();
-        System.out.println(name);
+        try {
+            if (!processTableReadyQueue.getSelectionModel().getSelectedItem().getProcessName().isEmpty()) {
+                name = processTableReadyQueue.getSelectionModel().getSelectedItem().getProcessName();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
      * Set high priority of the process
+     *
      * @param event event
      */
     @FXML
@@ -187,6 +196,7 @@ public class Controller {
 
     /**
      * Set above average priority of the process
+     *
      * @param event event
      */
     @FXML
@@ -196,6 +206,7 @@ public class Controller {
 
     /**
      * Set middle priority of the process
+     *
      * @param event event
      */
     @FXML
@@ -205,6 +216,7 @@ public class Controller {
 
     /**
      * Set below average priority of the process
+     *
      * @param event event
      */
     @FXML
@@ -214,12 +226,77 @@ public class Controller {
 
     /**
      * Set low priority of the process
+     *
      * @param event event
      */
     @FXML
     public void lowLevel(final ActionEvent event) {
         setPriority(30);
     }
+
+    /**
+     * Button turbo boost
+     */
+    @FXML
+    private Button turboBoostId;
+
+    /**
+     * Switch on/off turbo boost
+     */
+    @FXML
+    void turboBoost() {
+        if (turboBoostId.getStyle().equals("-fx-background-color: red")) {
+            turboBoostId.setStyle("-fx-background-color: defult");
+            turboBoostId.setStyle("-fx-border-width: defult");
+            runningProcesses.getCreatRunningProcesses().setSpeed(1);
+        } else {
+            turboBoostId.setStyle("-fx-background-color: red");
+            runningProcesses.getCreatRunningProcesses().setSpeed(10);
+        }
+
+    }
+
+    /**
+     * All processes quantity
+     */
+    @FXML
+    private TextField allProcessesQuantity;
+    /**
+     * Quantity reject queue
+     */
+
+    @FXML
+    private TextField quantityRejectQueue;
+    /**
+     * Quantity finished queue
+     */
+    @FXML
+    private TextField quantityFinishedQueue;
+    /**
+     * Quantity processes left system
+     */
+    @FXML
+    private TextField quantityProcessesLeftSystem;
+    /**
+     * Average service wait
+     */
+    @FXML
+    private TextField averageServiceWait;
+    /**
+     * Processor idle cycles
+     */
+    @FXML
+    private TextField processorIdleCycles;
+    /**
+     * Average waiting time for a process in a ready queue
+     */
+    @FXML
+    private TextField averageProcessWait;
+    /**
+     * Average time of the process
+     */
+    @FXML
+    private TextField averageProcessTime;
 
     /**
      * Object of RunningProcesses
@@ -234,10 +311,6 @@ public class Controller {
      */
     private UpdateTable updateTable = new UpdateTable();
     /**
-     * Object of ClearQueues
-     */
-    private ClearQueues clearQueues = new ClearQueues(runningProcesses.getCreatRunningProcesses().getQueue().getFinishedQueue(), runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue());
-    /**
      * Object of ObservableList
      */
     private static ObservableList<Table> dataReadyQueue = FXCollections.observableArrayList();
@@ -249,6 +322,7 @@ public class Controller {
      * Object of ObservableList
      */
     private static ObservableList<Table> dataFinishedQueue = FXCollections.observableArrayList();
+
 
     /**
      * Initialize of Controller
@@ -284,7 +358,15 @@ public class Controller {
         processTableFinishedQueue.setItems(dataFinishedQueue);
         refreshRunningProcesses.run();
         updateTable.run();
-        clearQueues.run();
+        Statistics();
+    }
+
+    @FXML
+    void about(final ActionEvent event) {
+        final Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("About");
+        alert.setContentText("Task manager\nAlexander Pavlovsky\n2019 \u00A9 copyright");
+        alert.show();
     }
 
     /**
@@ -293,11 +375,16 @@ public class Controller {
     public static void updateTableReadyQueue() {
         dataReadyQueue.clear();
         if (!runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue().isEmpty()) {
-            for (final Process process : runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue()) {
-                dataReadyQueue.add(new Table(process));
+            try {
+                for (final Process process : runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue()) {
+                    dataReadyQueue.add(new Table(process));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
+
 
     /**
      * Update table of reject queue
@@ -305,8 +392,12 @@ public class Controller {
     public static void updateTableRejectQueue() {
         dataRejectQueue.clear();
         if (!runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue().getRejectQueue().isEmpty()) {
-            for (final Process process : runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue().getRejectQueue()) {
-                dataRejectQueue.add(new Table(process));
+            try {
+                for (final Process process : runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue().getRejectQueue()) {
+                    dataRejectQueue.add(new Table(process));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
@@ -317,14 +408,20 @@ public class Controller {
     public static void updateTableFinishedQueue() {
         dataFinishedQueue.clear();
         if (!runningProcesses.getCreatRunningProcesses().getQueue().getFinishedQueue().getFinishedQueue().isEmpty()) {
-            for (final Process process : runningProcesses.getCreatRunningProcesses().getFinishedQueue().getFinishedQueue()) {
-                dataFinishedQueue.add(new Table(process));
+            try {
+                for (final Process process : runningProcesses.getCreatRunningProcesses().getFinishedQueue().getFinishedQueue()) {
+
+                    dataFinishedQueue.add(new Table(process));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
 
     /**
      * Set priority of the process
+     *
      * @param priority priority
      */
     private void setPriority(final int priority) {
@@ -336,6 +433,42 @@ public class Controller {
                 break;
             }
         }
-        runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue().get(i).setPriority(priority);
+        try {
+            runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getReadyQueue().get(i).setPriority(priority);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void Statistics() {
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                if (!runningProcesses.getCreatRunningProcesses().getQueue().getQueue().isEmpty()) {
+                    allProcessesQuantity.setText(String.valueOf(runningProcesses.getCreatRunningProcesses().getQueue().getLastID()));
+                }
+                if (!runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue().getRejectQueue().isEmpty()) {
+                    quantityRejectQueue.setText(String.valueOf(runningProcesses.getCreatRunningProcesses().getQueue().getRejectQueue().getQuantityRejectQueue()));
+                }
+                if (!runningProcesses.getCreatRunningProcesses().getQueue().getFinishedQueue().getFinishedQueue().isEmpty()) {
+                    quantityFinishedQueue.setText(String.valueOf(runningProcesses.getCreatRunningProcesses().getFinishedQueue().getQuantityFinishedQueue()));
+                }
+                quantityProcessesLeftSystem.setText(String.valueOf(runningProcesses.getCreatRunningProcesses().getQuantityProcessesLeft()));
+                if (runningProcesses.getCreatRunningProcesses().getQueue().getAverageServiceWait() != 0) {
+                    averageServiceWait.setText(runningProcesses.getCreatRunningProcesses().getQueue().getAverageServiceWait() / runningProcesses.getCreatRunningProcesses().getQueue().getLastID() + " tact(s)");
+                }
+                processorIdleCycles.setText(runningProcesses.getProcessorIdleCycles() + " tact(s)");
+                if (runningProcesses.getCreatRunningProcesses().getAverageProcessWait() != 0) {
+                    averageProcessWait.setText(runningProcesses.getCreatRunningProcesses().getAverageProcessWait() / runningProcesses.getCreatRunningProcesses().getQueue().getReadyQueue().getQuantityReadyQueue() + " tact(s)");
+                }
+                if (runningProcesses.getCreatRunningProcesses().getAverageProcessTime() != 0) {
+                    averageProcessTime.setText(runningProcesses.getCreatRunningProcesses().getAverageProcessTime() / runningProcesses.getCreatRunningProcesses().getFinishedQueue().getQuantityFinishedQueue() + " tact(s)");
+                }
+            }
+        };
+        Timer timer = new Timer("Timer");
+        long delay = 1000L;
+        long period = 1000L;
+        timer.scheduleAtFixedRate(timerTask, delay, period);
     }
 }

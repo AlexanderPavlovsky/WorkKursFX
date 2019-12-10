@@ -23,8 +23,9 @@ public class RunningProcess extends Thread {
 
     /**
      * Constructor of running process
-     * @param process process
-     * @param index index
+     *
+     * @param process               process
+     * @param index                 index
      * @param creatRunningProcesses creatRunningProcesses
      */
     RunningProcess(final Process process, final int index, final CreatRunningProcesses creatRunningProcesses) {
@@ -35,10 +36,11 @@ public class RunningProcess extends Thread {
 
     /**
      * Constructor of running process
-     * @param process process
-     * @param index index
+     *
+     * @param process               process
+     * @param index                 index
      * @param creatRunningProcesses creatRunningProcesses
-     * @param priority priority
+     * @param priority              priority
      */
     RunningProcess(final Process process, final int index, final CreatRunningProcesses creatRunningProcesses, final int priority) {
         this.process = process;
@@ -49,12 +51,10 @@ public class RunningProcess extends Thread {
 
     @Override
     public void run() {
+        creatRunningProcesses.setAverageProcessWait(ClockGenerator.getTime() - process.getTimeInReadyQueue());
         process.setState(sample.classes.State.Running);
-        if (process.getTimeIn() == 0) {
-            process.setTimeIn(ClockGenerator.getTime());
-        }
         try {
-            sleep(process.getTime());
+            sleep(process.getTime() / creatRunningProcesses.getSpeed());
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -62,6 +62,7 @@ public class RunningProcess extends Thread {
             if (priority > process.getPriority()) {
                 process.setBurstTime(ClockGenerator.getTime());
                 process.setState(sample.classes.State.Finished);
+                creatRunningProcesses.setAverageProcessTime(process.getBurstTime() - process.getTimeIn());
                 creatRunningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
                 creatRunningProcesses.getFinishedQueue().addFinishedQueue(process);
             } else {
@@ -70,6 +71,7 @@ public class RunningProcess extends Thread {
         } else {
             process.setBurstTime(ClockGenerator.getTime());
             process.setState(sample.classes.State.Finished);
+            creatRunningProcesses.setAverageProcessTime(process.getBurstTime() - process.getTimeIn());
             creatRunningProcesses.getQueue().getMemoryScheduler().releaseMemoryBlock(process.getMemoryBlock());
             creatRunningProcesses.getFinishedQueue().addFinishedQueue(process);
         }

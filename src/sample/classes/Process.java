@@ -29,6 +29,10 @@ public class Process {
      */
     private int timeIn;
     /**
+     * ime in ready queue of process
+     */
+    private int timeInReadyQueue;
+    /**
      * Burst time of process
      */
     private int burstTime;
@@ -41,6 +45,13 @@ public class Process {
      */
     private MemoryBlock memoryBlock;
 
+    public int getTimeInReadyQueue() {
+        return timeInReadyQueue;
+    }
+
+    public void setTimeInReadyQueue(final int timeInReadyQueue) {
+        this.timeInReadyQueue = timeInReadyQueue;
+    }
 
     public void setPriority(final int priority) {
         this.priority = priority;
@@ -103,7 +114,8 @@ public class Process {
         this.memory = Utils.getRandomInteger(10, Configuration.memoryVolume / 2);
         this.priority = Utils.getRandomInteger(1, Configuration.maxPriority);
         this.time = Utils.getRandomInteger(1, 2000);
-        this.timeIn = 0;
+        this.timeIn = ClockGenerator.getTime();
+        this.timeInReadyQueue = 0;
         this.burstTime = 0;
         this.name = "P" + this.id;
         this.state = State.Ready;

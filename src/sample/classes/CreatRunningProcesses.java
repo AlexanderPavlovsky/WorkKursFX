@@ -18,6 +18,54 @@ class CreatRunningProcesses {
      * Object of Queue
      */
     private Queue queue;
+    /**
+     * Speed of process
+     */
+    private int speed = 1;
+    /**
+     * Quantity processes left
+     */
+    private int quantityProcessesLeft = 0;
+    /**
+     * Average process wait
+     */
+    private  int  averageProcessWait = 0;
+    /**
+     * Average process time
+     */
+    private  int averageProcessTime = 0;
+
+    public int getAverageProcessTime() {
+        return averageProcessTime;
+    }
+
+    public void setAverageProcessTime(final int averageProcessTime) {
+        this.averageProcessTime = averageProcessTime;
+    }
+
+    public int getAverageProcessWait() {
+        return averageProcessWait;
+    }
+
+    public void setAverageProcessWait(final int averageProcessWait) {
+        this.averageProcessWait = averageProcessWait;
+    }
+
+    public int getQuantityProcessesLeft() {
+        return quantityProcessesLeft;
+    }
+
+    public void setQuantityProcessesLeft(final int quantityProcessesLeft) {
+        this.quantityProcessesLeft = quantityProcessesLeft;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(final int speed) {
+        this.speed = speed;
+    }
 
     /**
      * Constructor of CreatRunningProcesses

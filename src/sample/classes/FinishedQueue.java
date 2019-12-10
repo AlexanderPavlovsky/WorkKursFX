@@ -10,9 +10,14 @@ class FinishedQueue {
      * Array list of processes
      */
     private ArrayList<Process> finishedQueue;
+    /**
+     *  Quantity finished queue
+     */
+    private int quantityFinishedQueue;
 
     FinishedQueue() {
         finishedQueue = new ArrayList<>();
+        quantityFinishedQueue = 1;
     }
 
     /**
@@ -23,11 +28,16 @@ class FinishedQueue {
         return finishedQueue;
     }
 
+    public int getQuantityFinishedQueue() {
+        return quantityFinishedQueue;
+    }
+
     /**
      * Add to array list process
      * @param process process
      */
     public void addFinishedQueue(final Process process) {
         finishedQueue.add(process);
+        quantityFinishedQueue++;
     }
 }

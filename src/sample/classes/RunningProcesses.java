@@ -11,20 +11,30 @@ class RunningProcesses {
      * Object of CreatRunningProcesses
      */
     private CreatRunningProcesses creatRunningProcesses;
-
+    /**
+     * Processor idle cycles
+     */
+    private int processorIdleCycles = 0;
 
     RunningProcesses() {
         creatRunningProcesses = new CreatRunningProcesses();
         final AddQueue addQueue = new AddQueue(creatRunningProcesses);
         addQueue.run();
+        ClearQueues clearQueues = new ClearQueues(creatRunningProcesses);
+        clearQueues.run();
     }
 
     /**
      * Get creat running processes
+     *
      * @return creat running processes
      */
     public CreatRunningProcesses getCreatRunningProcesses() {
         return creatRunningProcesses;
+    }
+
+    public int getProcessorIdleCycles() {
+        return processorIdleCycles;
     }
 
     /**
@@ -32,20 +42,27 @@ class RunningProcesses {
      */
     public void runProcess() {
         Process runningProcess;
+        final ArrayList<Process> tempProcesses = new ArrayList<>();
         for (int i = 0; i < Configuration.quantityRunningProcesses; i++) {
             if (creatRunningProcesses.getRunningProcessesIsFree().get(i) == Boolean.TRUE) {
                 if (!creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().isEmpty()) {
                     creatRunningProcesses.getRunningProcessesIsFree().set(i, Boolean.FALSE);
                     runningProcess = creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().get(0);
                     creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue().remove(0);
-                    final ArrayList<Process> tempProcesses = creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue();
+                    tempProcesses.clear();
+                    tempProcesses.addAll(creatRunningProcesses.getQueue().getReadyQueue().getReadyQueue());
                     tempProcesses.sort(Comparator.comparingInt(Process::getPriority));
-                    if(!tempProcesses.isEmpty()){
+                    if (!tempProcesses.isEmpty()) {
                         creatRunningProcesses.getCreatRunningProcesses().set(i, new RunningProcess(runningProcess, i, creatRunningProcesses, tempProcesses.get(0).getPriority()));
-                    }else {
+                    } else {
                         creatRunningProcesses.getCreatRunningProcesses().set(i, new RunningProcess(runningProcess, i, creatRunningProcesses));
                     }
                     creatRunningProcesses.getCreatRunningProcesses().get(i).start();
+                }
+                else {
+                    if(creatRunningProcesses.getRunningProcessesIsFree().get(i) == Boolean.TRUE){
+                        processorIdleCycles++;
+                    }
                 }
             }
         }
